@@ -16,7 +16,7 @@ import model.Computer;
 * Feb 11, 2021
 */
 public class Modifier {
-	static EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("ComputerSpecs");
+	static EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("ComputerSpecsWeb");
 
 	public void insertComputer(Computer com)
 	{
