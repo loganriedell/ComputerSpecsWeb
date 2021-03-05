@@ -3,6 +3,7 @@
 	<persistence-unit name="ComputerSpecsWeb" transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<class>model.Computer</class>
+		<class>model.CPU</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
 			<property name="javax.persistence.jdbc.user" value="admin"/>

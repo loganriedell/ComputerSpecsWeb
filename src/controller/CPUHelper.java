@@ -1,64 +1,71 @@
-/**
- * 
- */
 package controller;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
+import model.CPU;
 import model.Computer;
 
-/** *@author logie - Logan Riedell
-* CIS175 - Spring 2021
-* Feb 11, 2021
-*/
-public class Modifier {
+public class CPUHelper {
 	static EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("ComputerSpecsWeb");
-
-	public void insertComputer(Computer com)
+	
+	public void insertCPU(CPU cpu)
 	{
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
-		em.persist(com);
+		em.persist(cpu);
 		em.getTransaction().commit();
 		em.close();
 	}
 	
-	public void deleteComputer(int index)
+	public void deleteCPU(int index)
 	{
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
-		Computer target = em.find(Computer.class, index);
+		CPU target = em.find(CPU.class, index);
 		em.remove(target);
 		em.getTransaction().commit();
 		em.close();
 	}
 	
-	public Computer searchId(int idNumber)
+	public CPU searchId(int idNumber)
 	{
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
-		Computer retrieved = em.find(Computer.class, idNumber);
+		CPU retrieved = em.find(CPU.class, idNumber);
 		em.close();
 		return retrieved;
 	}
 	
-	public void updateCom(Computer com)
+	public void updateCPU(CPU cpu)
 	{
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
-		em.merge(com);
+		em.merge(cpu);
 		em.getTransaction().commit();
 		em.close();
 	}
-	public List<Computer> showComputers()
+	public List<CPU> showCPUs()
 	{
 		EntityManager em = emfactory.createEntityManager();
-		List<Computer> allComputers = em.createQuery("SELECT com FROM Computer com").getResultList();
-		return allComputers;
+		List<CPU> allCPUs = em.createQuery("SELECT cpu FROM CPU cpu").getResultList();
+		return allCPUs;
+	}
+	public CPU searchByName(String name)
+	{
+		EntityManager em = emfactory.createEntityManager();
+		em.getTransaction().begin();
+		TypedQuery<CPU> typedQuery = em.createQuery("select cpu from CPU cpu where cpu.name = :selectedName", CPU.class);
+		typedQuery.setParameter("selectedName", name);
+		CPU foundCPU;
+		foundCPU = typedQuery.getSingleResult();
+		em.close();
+		return foundCPU;
 	}
 	
 	public void clean()

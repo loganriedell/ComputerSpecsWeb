@@ -4,11 +4,17 @@
 package Default;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 
+import controller.CPUHelper;
 import controller.Modifier;
+import model.CPU;
 import model.Computer;
 
 /** *@author logie - Logan Riedell
@@ -19,7 +25,24 @@ public class Main {
 	static Modifier mod = new Modifier();
 	public static void main(String[] args)
 	{
-		showMenu();
+		//showMenu();
+		CPUHelper help = new CPUHelper();
+		CPU cpu = new CPU(16, 478, "AMD blah");
+		Computer com = new Computer("GTX Random", "MacOS Ultra Random");
+		List<Computer> comList = new ArrayList<Computer>();
+		comList.add(com);
+		Computer com2 = new Computer("Something stupid", "Windows");
+		comList.add(com2);
+		cpu.setListOfComputers(comList);
+		help.insertCPU(cpu);
+		List<CPU> cpus = help.showCPUs();
+		
+		for(CPU cpuu: cpus)
+		{
+			System.out.println(cpuu.getListOfComputers());
+		}
+		
+		
 	}
 	
 	public static void showMenu()

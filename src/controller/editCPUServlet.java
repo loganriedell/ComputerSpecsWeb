@@ -7,19 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Computer;
+import model.CPU;
 
 /**
- * Servlet implementation class AddComputerServlet
+ * Servlet implementation class editCPUServlet
  */
-@WebServlet("/addComputerServlet")
-public class AddComputerServlet extends HttpServlet {
+@WebServlet("/editCPUServlet")
+public class editCPUServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddComputerServlet() {
+    public editCPUServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,19 +28,29 @@ public class AddComputerServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//TODO Auto-generated method stub}
+		// TODO Auto-generated method stub
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String gpu = request.getParameter("gpu");
-		String os = request.getParameter("os");
-		Computer com = new Computer(gpu, os);
-		Modifier mod = new Modifier();
-		mod.insertComputer(com);
-		getServletContext().getRequestDispatcher("/index.html").forward(request, response);
+		CPUHelper help = new CPUHelper();
+		String whatDo = request.getParameter("doThis");
+		
+		if (whatDo.equals("delete"))
+		{
+			try {
+				int id = Integer.parseInt(request.getParameter("cpu_id"));
+				help.deleteCPU(id);
+			}
+			catch(NumberFormatException e)
+			{
+				System.out.println("Did not pick cpu");
+			}		
+		}
+		getServletContext().getRequestDispatcher("/viewAllCPUsServlet").forward(request, response);
 	}
 
 }
